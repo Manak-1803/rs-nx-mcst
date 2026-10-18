@@ -26,6 +26,7 @@
 
         (lib.mkIf cfg.graphical {
           rsnxmcst = {
+            discord.enable = true;
             fonts.enable = true;
             lazygit.enable = true;
             vscodium.enable = true;
