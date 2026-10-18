@@ -29,6 +29,7 @@
           nh.enable = true;
           nix.enable = true;
           nixpkgs.enable = true;
+          qwerty.enable = true;
           secrets.enable = true;
           sudo.enable = true;
           tpm.enable = true;
