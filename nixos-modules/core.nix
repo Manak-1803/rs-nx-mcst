@@ -25,6 +25,7 @@
         rsnxmcst = {
           fwupd.enable = true;
           home-manager.enable = true;
+          libvirtd.enable = true;
           locale.enable = true;
           network-manager.enable = true;
           nh.enable = true;
