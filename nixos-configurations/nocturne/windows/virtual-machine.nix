@@ -30,6 +30,10 @@
           };
         };
 
+        boot.kernel.sysctl = {
+          "vm.nr_hugepages" = 8448;
+        };
+
         rsnxmcst.libvirtd.volumes = lib.singleton {
           present = true;
           definition = inputs.nixvirt.lib.volume.writeXML {

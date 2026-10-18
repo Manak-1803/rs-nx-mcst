@@ -46,6 +46,14 @@
     <partition>/machine</partition>
   </resource>
 
+  <!-- Memory Backing for Hugepages -->
+  <memoryBacking>
+    <hugepages/>
+    <nosharepages/>
+    <source type='memfd'/>
+    <access mode='shared'/>
+  </memoryBacking>
+
   <cputune>
     <!-- Map each guest vCPU to specific host threads -->
     <vcpupin vcpu='0' cpuset='4'/>
@@ -115,20 +123,20 @@
     <disk type='file' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
       <source file='/var/lib/libvirt/images/Windows.img'/>
-      <target dev='sda' bus='scsi'/>
+      <target dev='vda' bus='virtio'/>
     </disk>
 
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
       <source file='/var/lib/libvirt/images/Windows.iso'/>
-      <target dev='sdb' bus='sata'/>
+      <target dev='sda' bus='sata'/>
       <readonly/>
     </disk>
     
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
       <source file='/var/lib/libvirt/images/VirtIO-Windows.iso'/>
-      <target dev='sdc' bus='sata'/>
+      <target dev='sdb' bus='sata'/>
       <readonly/>
     </disk>
 
@@ -159,6 +167,10 @@
     <!-- Virtio Channels -->
     <channel type='spicevmc'>
       <target type='virtio' name='com.redhat.spice.0'/>
+    </channel>
+
+    <channel type='unix'>
+      <target type='virtio' name='org.qemu.guest_agent.0'/>
     </channel>
 
     <!-- Input Devices (VirtIO Mouse & Keyboard) -->

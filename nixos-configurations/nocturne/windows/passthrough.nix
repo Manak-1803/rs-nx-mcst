@@ -6,13 +6,14 @@
         boot = {
           kernelModules = [
             "vfio"
-            "vfio_iommu_type1"
             "vfio_pci"
+            "vfio_iommu_type1"
           ];
 
           kernelParams = [
             "iommu=pt"
             "amd_iommu=on"
+            "kvm.ignore_msrs=1"
             "vfio-pci.ids=10de:2860,10de:22bd"
           ];
 
@@ -23,10 +24,6 @@
             "nvidia_uvm"
             "nvidia_modeset"
           ];
-
-          extraModprobeConfig = ''
-            options kvm ignore_msrs=1
-          '';
         };
 
         services.xserver.videoDrivers = lib.mkForce [ "amdgpu" ];
