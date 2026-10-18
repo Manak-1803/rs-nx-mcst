@@ -13,6 +13,7 @@
       config = lib.mkMerge [
         (lib.mkIf cfg.enable {
           rsnxmcst = {
+            btop.enable = true;
             direnv.enable = true;
             gh.enable = true;
             git.enable = true;
