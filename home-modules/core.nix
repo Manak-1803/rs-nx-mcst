@@ -30,6 +30,7 @@
             discord.enable = true;
             fonts.enable = true;
             lazygit.enable = true;
+            spotify.enable = true;
             vscodium.enable = true;
           };
         })
