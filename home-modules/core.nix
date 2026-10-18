@@ -24,7 +24,9 @@
         })
 
         (lib.mkIf cfg.graphical {
-          rsnxmcst = { };
+          rsnxmcst = {
+            fonts.enable = true;
+          };
         })
       ];
     };
