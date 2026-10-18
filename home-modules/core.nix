@@ -27,6 +27,7 @@
         (lib.mkIf cfg.graphical {
           rsnxmcst = {
             fonts.enable = true;
+            lazygit.enable = true;
           };
         })
       ];
