@@ -28,6 +28,7 @@
           rsnxmcst = {
             fonts.enable = true;
             lazygit.enable = true;
+            vscodium.enable = true;
           };
         })
       ];
