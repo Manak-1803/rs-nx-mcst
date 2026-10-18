@@ -23,6 +23,7 @@
         };
 
         rsnxmcst = {
+          home-manager.enable = true;
           nix.enable = true;
           secrets.enable = true;
           sudo.enable = true;
