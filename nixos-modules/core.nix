@@ -25,6 +25,7 @@
         rsnxmcst = {
           nix.enable = true;
           secrets.enable = true;
+          tpm.enable = true;
         };
 
         boot.kernelPackages = pkgs.linuxPackages_latest;
