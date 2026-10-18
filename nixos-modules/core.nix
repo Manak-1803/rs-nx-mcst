@@ -26,6 +26,7 @@
           home-manager.enable = true;
           nh.enable = true;
           nix.enable = true;
+          nixpkgs.enable = true;
           secrets.enable = true;
           sudo.enable = true;
           tpm.enable = true;
