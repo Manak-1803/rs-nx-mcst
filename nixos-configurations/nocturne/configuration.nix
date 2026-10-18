@@ -27,7 +27,7 @@
       };
     };
 
-    nixpkgs.config.nvidiaSupport = true;
+    nixpkgs.config.cudaSupport = true;
     networking.hostName = "nocturne";
     users.mutableUsers = false;
 
