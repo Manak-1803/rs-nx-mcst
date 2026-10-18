@@ -17,6 +17,7 @@
             gh.enable = true;
             git.enable = true;
             secrets.enable = true;
+            ssh.enable = true;
             xdg-directories.enable = true;
           };
 
