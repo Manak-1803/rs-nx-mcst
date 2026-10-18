@@ -30,6 +30,7 @@
             discord.enable = true;
             fonts.enable = true;
             lazygit.enable = true;
+            prismlauncher.enable = true;
             spotify.enable = true;
             vscodium.enable = true;
             zen-browser.enable = true;
