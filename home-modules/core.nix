@@ -13,6 +13,7 @@
       config = lib.mkMerge [
         (lib.mkIf cfg.enable {
           rsnxmcst = {
+            gh.enable = true;
             git.enable = true;
             secrets.enable = true;
             xdg-directories.enable = true;
