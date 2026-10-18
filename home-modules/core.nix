@@ -14,6 +14,7 @@
         (lib.mkIf cfg.enable {
           rsnxmcst = {
             secrets.enable = true;
+            xdg-directories.enable = true;
           };
 
           programs.home-manager.enable = true;
