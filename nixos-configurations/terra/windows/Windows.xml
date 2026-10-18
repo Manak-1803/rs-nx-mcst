@@ -1,0 +1,243 @@
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+  <!-- ================================================================= -->
+  <!-- 1. IDENTIFICATION & METADATA                                      -->
+  <!-- ================================================================= -->
+  <name>Windows</name>
+  <uuid>fc2c108d-2532-4a30-8992-37fe5e1865f4</uuid>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+      <libosinfo:os id="http://microsoft.com/win/11"/>
+    </libosinfo:libosinfo>
+  </metadata>
+
+  <!-- ================================================================= -->
+  <!-- 2. BOOT, FIRMWARE & ARCHITECTURE                                  -->
+  <!-- ================================================================= -->
+  <os firmware='efi'>
+    <type arch='x86_64' machine='pc-q35-11.1'>hvm</type>
+    <firmware>
+      <feature enabled='no' name='enrolled-keys'/>
+      <feature enabled='yes' name='secure-boot'/>
+    </firmware>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/run/libvirt/nix-ovmf/edk2-x86_64-secure-code.fd</loader>
+    <nvram template='/run/libvirt/nix-ovmf/edk2-i386-vars.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/Windows_VARS.fd</nvram>
+    <boot dev='hd'/>
+  </os>
+
+  <!-- Lifecycle Event Handlers -->
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+
+  <!-- Power Management Settings -->
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+
+  <!-- ================================================================= -->
+  <!-- 3. COMPUTE RESOURCES (CPU, TOPOLOGY & TUNING)                     -->
+  <!-- ================================================================= -->
+  <memory unit='KiB'>25165824</memory>
+  <currentMemory unit='KiB'>25165824</currentMemory>
+  <vcpu placement='static'>12</vcpu>
+
+  <resource>
+    <partition>/machine</partition>
+  </resource>
+  
+  <!-- Memory Backing for Hugepages -->
+  <memoryBacking>
+    <hugepages/>
+    <nosharepages/>
+    <source type='memfd'/>
+    <access mode='shared'/>
+  </memoryBacking>
+
+  <cputune>
+    <!-- Mapped to Cores 2, 3, 4, 5, 6, 7 (leaving Cores 0 & 1 for host) -->
+    <vcpupin vcpu='0' cpuset='2'/>
+    <vcpupin vcpu='1' cpuset='10'/>
+    <vcpupin vcpu='2' cpuset='3'/>
+    <vcpupin vcpu='3' cpuset='11'/>
+    <vcpupin vcpu='4' cpuset='4'/>
+    <vcpupin vcpu='5' cpuset='12'/>
+    <vcpupin vcpu='6' cpuset='5'/>
+    <vcpupin vcpu='7' cpuset='13'/>
+    <vcpupin vcpu='8' cpuset='6'/>
+    <vcpupin vcpu='9' cpuset='14'/>
+    <vcpupin vcpu='10' cpuset='7'/>
+    <vcpupin vcpu='11' cpuset='15'/>
+    <!-- Pin QEMU emulator thread to host-only cores (Core 0, 1) -->
+    <emulatorpin cpuset='0,1,8,9'/>
+  </cputune>
+
+  <cpu mode='host-passthrough' check='none' migratable='on'>
+    <topology sockets='1' dies='1' clusters='1' cores='6' threads='2'/>
+    <cache mode='passthrough'/>
+    <!-- Enables AMD Topology Extension so Windows correctly groups core pairs -->
+    <feature policy='require' name='topoext'/>
+  </cpu>
+
+  <!-- ================================================================= -->
+  <!-- 4. HYPERVISOR FEATURES & CLOCK TIMING                             -->
+  <!-- ================================================================= -->
+  <features>
+    <acpi/>
+    <apic/>
+    <hyperv mode='custom'>
+      <relaxed state='on'/>
+      <vapic state='on'/>
+      <spinlocks state='on' retries='8191'/>
+      <vendor_id state='on' value='AuthenticAMD'/>
+      <vpindex state='on'/>
+      <runtime state='on'/>
+      <synic state='on'/>
+      <stimer state='on'/>
+      <frequencies state='on'/>
+      <tlbflush state='on'/>
+      <ipi state='on'/>
+      <avic state='on'/>
+    </hyperv>
+    <kvm>
+      <hidden state='on'/>
+    </kvm>
+    <vmport state='off'/>
+    <smm state='on'/>
+  </features>
+
+  <clock offset='localtime'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+    <timer name='hypervclock' present='yes'/>
+  </clock>
+
+  <!-- ================================================================= -->
+  <!-- 5. HARDWARE DEVICES & CONTROLLERS                                 -->
+  <!-- ================================================================= -->
+  <devices>
+    <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
+
+    <!-- Storage Disks & ISOs -->
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
+      <source file='/var/lib/libvirt/images/Windows.img'/>
+      <target dev='vda' bus='virtio'/>
+    </disk>
+
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
+      <source file='/var/lib/libvirt/images/WinData.img'/>
+      <target dev='vdb' bus='virtio'/>
+    </disk>
+
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/var/lib/libvirt/images/Windows.iso'/>
+      <target dev='sda' bus='sata'/>
+      <readonly/>
+    </disk>
+
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/var/lib/libvirt/images/VirtIO-Windows.iso'/>
+      <target dev='sdb' bus='sata'/>
+      <readonly/>
+    </disk>
+
+    <!-- Essential Controllers (Auto-assigned addresses) -->
+    <controller type='usb' index='0' model='qemu-xhci' ports='15'/>
+    <controller type='pci' index='0' model='pcie-root'/>
+    <controller type='scsi' index='0' model='virtio-scsi'/>
+    <controller type='sata' index='0'/>
+    <controller type='virtio-serial' index='0'/>
+
+    <!-- Network Interface -->
+    <interface type='network'>
+      <mac address='52:54:00:80:60:ba'/>
+      <source network='Bridge Network'/>
+      <model type='e1000e'/>
+    </interface>
+
+    <!-- Serial Console & Debugging -->
+    <serial type='pty'>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+
+    <!-- Virtio Channels -->
+    <channel type='spicevmc'>
+      <target type='virtio' name='com.redhat.spice.0'/>
+    </channel>
+
+    <channel type='unix'>
+      <target type='virtio' name='org.qemu.guest_agent.0'/>
+    </channel>
+
+    <!-- Input Devices (VirtIO Mouse & Keyboard) -->
+    <input type='mouse' bus='virtio'/>
+    <input type='keyboard' bus='virtio'/>
+
+    <!-- TPM 2.0 (Required for Windows 11) -->
+    <tpm model='tpm-crb'>
+      <backend type='emulator' version='2.0'/>
+    </tpm>
+
+    <!-- Display, Graphics & Audio -->
+    <graphics type='spice' port='5900' autoport='yes' listen='127.0.0.1'>
+      <listen type='address' address='127.0.0.1'/>
+      <image compression='off'/>
+    </graphics>
+
+    <sound model='ich9'>
+      <audio id='1'/>
+    </sound>
+    <audio id='1' type='spice'/>
+
+    <video>
+      <model type='vga'/>
+    </video>
+
+    <!-- AMD Navi 48 VGA Controller -->
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+      </source>
+    </hostdev>
+
+    <!-- AMD Navi 48 HDMI/DP Audio Controller -->
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x03' slot='0x00' function='0x1'/>
+      </source>
+    </hostdev>
+
+    <!-- USB Redirection -->
+    <redirdev bus='usb' type='spicevmc'/>
+    <redirdev bus='usb' type='spicevmc'/>
+
+    <!-- Misc Devices -->
+    <watchdog model='itco' action='reset'/>
+    <memballoon model='none'/>
+  </devices>
+
+  <!-- ================================================================= -->
+  <!-- 6. SECURITY & QEMU EXTENSIONS (LOOKING GLASS)                     -->
+  <!-- ================================================================= -->
+  <seclabel type='dynamic' model='dac' relabel='yes'>
+    <label>+0:+0</label>
+    <imagelabel>+0:+0</imagelabel>
+  </seclabel>
+
+  <qemu:commandline>
+    <qemu:arg value="-device"/>
+    <qemu:arg value="{'driver':'ivshmem-plain','id':'shmem0','memdev':'looking-glass'}"/>
+    <qemu:arg value="-object"/>
+    <qemu:arg value="{'qom-type':'memory-backend-file','id':'looking-glass','mem-path':'/dev/kvmfr0','size':67108864,'share':true}"/>
+  </qemu:commandline>
+</domain>
