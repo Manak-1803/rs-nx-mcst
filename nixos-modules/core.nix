@@ -23,6 +23,7 @@
         };
 
         rsnxmcst = {
+          nix.enable = true;
           secrets.enable = true;
         };
 
