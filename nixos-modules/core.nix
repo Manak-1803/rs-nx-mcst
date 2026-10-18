@@ -25,6 +25,7 @@
         rsnxmcst = {
           fwupd.enable = true;
           home-manager.enable = true;
+          locale.enable = true;
           nh.enable = true;
           nix.enable = true;
           nixpkgs.enable = true;
