@@ -25,6 +25,7 @@
         rsnxmcst = {
           nix.enable = true;
           secrets.enable = true;
+          sudo.enable = true;
           tpm.enable = true;
         };
 
