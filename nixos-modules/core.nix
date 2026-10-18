@@ -26,6 +26,7 @@
           fwupd.enable = true;
           home-manager.enable = true;
           locale.enable = true;
+          network-manager.enable = true;
           nh.enable = true;
           nix.enable = true;
           nixpkgs.enable = true;
