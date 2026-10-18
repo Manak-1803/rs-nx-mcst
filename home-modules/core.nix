@@ -32,6 +32,7 @@
             lazygit.enable = true;
             spotify.enable = true;
             vscodium.enable = true;
+            zen-browser.enable = true;
           };
         })
       ];
