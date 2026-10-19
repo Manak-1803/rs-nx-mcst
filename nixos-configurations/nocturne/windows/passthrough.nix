@@ -23,6 +23,7 @@
             "nvidia_drm"
             "nvidia_uvm"
             "nvidia_modeset"
+            "nvidia_wmi_ec_backlight"
           ];
         };
 

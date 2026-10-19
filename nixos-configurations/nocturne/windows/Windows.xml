@@ -208,6 +208,7 @@
       <source>
         <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
       </source>
+      <rom file='/var/lib/libvirt/images/vbios.rom'/>
     </hostdev>
 
     <!-- NVIDIA AD106M High Definition Audio Controller (VFIO Passthrough) -->
