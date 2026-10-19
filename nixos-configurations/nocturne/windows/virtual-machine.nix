@@ -34,7 +34,7 @@
           "vm.nr_hugepages" = 8448;
         };
 
-        rsnxmcst.libvirtd.volumes = lib.singleton {
+        rsnxmcst.libvirtd.volumes = [{
           present = true;
           definition = inputs.nixvirt.lib.volume.writeXML {
             name = "Windows.img";
@@ -43,7 +43,18 @@
               unit = "GiB";
             };
           };
-        };
+        }
+        {
+          present = true;
+          definition = inputs.nixvirt.lib.volume.writeXML {
+            name = "WinData.img";
+            capacity = {
+              count = 256;
+              unit = "GiB";
+            };
+          };
+        }
+        ];
 
         environment.systemPackages = [
           windowsDesktopItem
