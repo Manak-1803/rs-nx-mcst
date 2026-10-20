@@ -26,6 +26,37 @@
           modules = [ self.modules.generic.${name} ] ++ (builtins.attrValues self.modules.nixos);
         };
       };
+
+      mkContainer =
+        {
+          module,
+          address,
+          bindMounts ? { },
+          allowedDevices ? [ ],
+        }:
+        {
+          autoStart = true;
+          ephemeral = true;
+          privateNetwork = true;
+          hostBridge = "containers";
+          localAddress = address;
+
+          inherit bindMounts allowedDevices;
+
+          config = lib.mkMerge [
+            module
+
+            {
+              system.stateVersion = 26.11;
+              services.resolved.enable = true;
+
+              networking = {
+                defaultGateway = "10.18.165.111";
+                useHostResolvConf = lib.mkForce false;
+              };
+            }
+          ];
+        };
     };
   };
 }
