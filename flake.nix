@@ -49,6 +49,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    rsnx-mc-st = {
+      flake = false;
+      url = "github:Manak-1803/rsnx-mc-st";
+    };
+
     packages = {
       flake = false;
       url = "path:./packages";

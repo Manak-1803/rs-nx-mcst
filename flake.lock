@@ -184,11 +184,28 @@
         "nixvirt": "nixvirt",
         "packages": "packages",
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
+        "rsnx-mc-st": "rsnx-mc-st",
         "secrets": "secrets",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "treefmt-nix": "treefmt-nix",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rsnx-mc-st": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792592058,
+        "narHash": "sha256-85pVzuIn33Wl6jvmVWHgQYqsO5tn8jlpc1GFDdf57Xk=",
+        "owner": "Manak-1803",
+        "repo": "rsnx-mc-st",
+        "rev": "a173b60ffee819818c597e7c8928adbf480f80ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Manak-1803",
+        "repo": "rsnx-mc-st",
+        "type": "github"
       }
     },
     "secrets": {
