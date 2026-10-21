@@ -47,7 +47,7 @@
             module
 
             {
-              system.stateVersion = 26.11;
+              system.stateVersion = "26.11";
               services.resolved.enable = true;
 
               networking = {
