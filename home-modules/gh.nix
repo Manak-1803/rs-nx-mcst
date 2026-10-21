@@ -15,7 +15,7 @@
           settings.git_protocol = "ssh";
         };
 
-        rsnxmcst.impermanence.files = [ "${config.xdg.configHome}/gh/hosts.yaml" ];
+        rsnxmcst.impermanence.files = [ "${config.xdg.configHome}/gh/hosts.yml" ];
       };
     };
 }
