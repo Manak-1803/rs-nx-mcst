@@ -19,7 +19,7 @@
           softdep amdgpu pre: vfio vfio-pci
         '';
       };
-      
+
       hardware.amdgpu.initrd.enable = lib.mkForce false;
     };
   };

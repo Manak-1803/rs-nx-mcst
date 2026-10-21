@@ -34,26 +34,27 @@
           "vm.nr_hugepages" = 8448;
         };
 
-        rsnxmcst.libvirtd.volumes = [{
-          present = true;
-          definition = inputs.nixvirt.lib.volume.writeXML {
-            name = "Windows.img";
-            capacity = {
-              count = 128;
-              unit = "GiB";
+        rsnxmcst.libvirtd.volumes = [
+          {
+            present = true;
+            definition = inputs.nixvirt.lib.volume.writeXML {
+              name = "Windows.img";
+              capacity = {
+                count = 128;
+                unit = "GiB";
+              };
             };
-          };
-        }
-        {
-          present = true;
-          definition = inputs.nixvirt.lib.volume.writeXML {
-            name = "WinData.img";
-            capacity = {
-              count = 256;
-              unit = "GiB";
+          }
+          {
+            present = true;
+            definition = inputs.nixvirt.lib.volume.writeXML {
+              name = "WinData.img";
+              capacity = {
+                count = 256;
+                unit = "GiB";
+              };
             };
-          };
-        }
+          }
         ];
 
         environment.systemPackages = [
