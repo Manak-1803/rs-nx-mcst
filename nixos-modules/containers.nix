@@ -12,22 +12,27 @@
     {
       options.rsnxmcst.containers = {
         enable = inputs.self.lib.enableOpt;
-        externalNAT = inputs.self.lib.mkOpt lib.types.str "lo";
       };
 
       config = lib.mkIf cfg.enable {
         networking = {
           nat = {
             enable = true;
+            enableIPv6 = true;
             internalInterfaces = [ "containers" ];
-            externalInterface = cfg.externalNAT;
+
+            extraCommands = ''
+              iptables -t nat -A POSTROUTING -s 10.18.0.0/16 ! -o containers -j MASQUERADE
+            '';
           };
 
           networkmanager.unmanaged = [
             "containers"
-            "interface-name:ve-*"
+            "interface-name:vb-*"
             "interface-name:veth*"
           ];
+
+          firewall.trustedInterfaces = [ "containers" ];
         };
 
         systemd.network = {
@@ -47,9 +52,6 @@
             "40-containers" = {
               matchConfig.Name = "containers";
               address = [ "10.18.165.111/16" ];
-              networkConfig = {
-                ConfigureWithoutCarrier = true;
-              };
             };
           };
         };
@@ -79,8 +81,9 @@
               # Create network if missing
               if ! ${pkgs.podman}/bin/podman network exists systemd-containers >/dev/null 2>&1; then
                 ${pkgs.podman}/bin/podman network create \
-                  --driver ipvlan \
-                  --opt parent=containers \
+                  --driver bridge \
+                  --opt mode=unmanaged \
+                  --opt com.docker.network.bridge.name=containers \
                   --subnet 10.18.0.0/16 \
                   --gateway 10.18.165.111 \
                   systemd-containers
