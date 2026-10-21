@@ -51,7 +51,7 @@
 
     rsnx-mc-st = {
       flake = false;
-      url = "github:Manak-1803/rsnx-mc-st";
+      url = "git+ssh://git@github.com/Manak-1803/rsnx-mc-st.git";
     };
 
     packages = {
