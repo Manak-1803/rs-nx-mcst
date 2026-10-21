@@ -15,7 +15,6 @@
 
       user-cain.enable = true;
 
-      containers.externalNAT = "wlo1";
       nh.flakePath = "/home/cain/Projects/rs@nx@mcst";
 
       nix.substituters = {
