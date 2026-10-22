@@ -1,6 +1,11 @@
 { inputs, ... }: {
   flake.modules.nixos.jellyfin =
-    { lib, config, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     let
       cfg = config.rsnxmcst.jellyfin;
     in
@@ -22,7 +27,7 @@
 
             #Media Path
             "/media" = {
-              hostPath = "/home/cain/Videos/jellyfin";
+              hostPath = "/media/jellyfin";
               isReadOnly = true;
             };
           }
@@ -93,6 +98,7 @@
             services.jellyfin = {
               enable = true;
               openFirewall = true;
+              forceEncodingConfig = true;
 
               transcoding = {
                 enableHardwareEncoding = cfg.enableNvidia;
@@ -104,8 +110,15 @@
 
                 hardwareDecodingCodecs = {
                   av1 = true;
+                  vc1 = true;
+                  vp8 = true;
+                  vp9 = true;
                   h264 = true;
                   hevc = true;
+                  mpeg2 = true;
+                  hevc10bit = true;
+                  hevcRExt10bit = true;
+                  hevcRExt12bit = true;
                 };
               };
 
@@ -118,7 +131,26 @@
           };
         };
 
-        rsnxmcst.impermanence.directories = [ "/var/lib/jellyfin" ];
+        rsnxmcst.impermanence.directories = [
+          "/var/lib/jellyfin"
+
+          {
+            directory = "/media/jellyfin";
+            user = "root";
+            group = "wheel";
+            mode = "2775";
+          }
+        ];
+
+        system.activationScripts.jellyfin-acls = ''
+          mkdir -p /media/jellyfin
+          chown root:wheel /media/jellyfin
+          chmod 2775 /media/jellyfin
+
+          # Set default ACLs for future contents
+          ${pkgs.acl}/bin/setfacl -d -m u::rwx,g::rwx,o::r-x /media/jellyfin
+          ${pkgs.acl}/bin/setfacl -d -m mask::rwx /media/jellyfin
+        '';
       };
     };
 }
