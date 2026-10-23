@@ -43,6 +43,7 @@
         environment.systemPackages = with pkgs; [
           lsof
           psmisc
+          usbutils
           pciutils
         ];
 
