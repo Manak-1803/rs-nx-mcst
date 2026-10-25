@@ -36,6 +36,13 @@
           secrets.enable = true;
           sudo.enable = true;
           tpm.enable = true;
+
+          nix.substituters = {
+            "https://cache.rsnxmcst.dedyn.io/main" = "main:oZ6ulr31W5NUttMRoIqUUWEQtU7grq1wOJCIpULS/Z4=";
+
+            "https://nix-community.cachix.org" =
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+          };
         };
 
         boot.kernelPackages = pkgs.linuxPackages_latest;

@@ -18,9 +18,6 @@
       nh.flakePath = "/home/cain/Projects/rs@nx@mcst";
 
       nix.substituters = {
-        "https://nix-community.cachix.org" =
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
-
         "https://cache.nixos-cuda.org" =
           "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=";
       };
