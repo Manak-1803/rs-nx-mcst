@@ -13,6 +13,7 @@
       config = lib.mkMerge [
         (lib.mkIf cfg.enable {
           rsnxmcst = {
+            attic-client.enable = true;
             btop.enable = true;
             direnv.enable = true;
             gh.enable = true;

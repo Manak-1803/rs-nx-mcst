@@ -2,8 +2,11 @@ keys:
   master:
     - &admin age1pq1tcdgt8wrzq2298ylpd5znwwqq4dtju5k2yhmvtxggucfadpx5s35s7l33ker49l7es6hytq9ecs8s6kgpka8tqvdz5guxezp8g9td94ur69kdy3pumxryycqe06qgdy2z5f5vrssgcy4fa4hcme6ry6vv0lfd0cjtgx5kw5df7rm640c03ca9dqk036gx4tk26pnu5yhx6aq08rpc5xyjzmtu6524rfpc5n34r5kep5v6tqydmznl4t58fjpyw7jrq6e9jmclc35kstzxhey3gf0q280hxgv4068wka4zp2fcuxxzcahnqj82ddu7p0kpw54ndlzlqgmu49ee232nx8s2ccxyzgmmysuq23j8zf8tdn2x37hr3pp9zec8lr5uy2qt8fmhqkez5euxx5hwfdch64ktustr3pa4qj280zqngv4w2emglat0jj2d8585y3xhgukne9sjruc8j7sxx4awqrk2ysve85njywzkwpeqh6rdqdfjx2tuy5n3uffn72kj5v45adjeavtntpxs5ynf8pm0qg4dpy76gcp4cq25mtrxrrh50ch2vlvequ8g9kprkx39tx3w2tsug0qakzdsyuuukat8ugrhs0nqgyz9ce3nwtr2wgcq0uvz9jj0p2rfkez4t9tnza4engc27xz68p6ek9tv5wgh2gf4rv7382cvfkyf9r2uhyqh0w98rma2fkzq3e7dzt2ssg3vtnhww53y0dsxpjjgqk0v64tnqfpd5pvrqkjrfxtyxa3fhv3yd84crtajc6n7vft56j6dznnyl04xma0clumrg5d67rrskr4mhgyc6k8k0ka4j38q4mj2hsp8yd5kxxny5l5qq8uguek689zl9f5039ywkt6mg3wwcvxfx99jfr5fzwv3vpw7yf7p0rtl6dqw2u5t2vycjfyv9lwww44se9qdrzprfn9yjpuag9ccws2lfr6p9u3w6q4f034z90r2agk98vcepv4vqawfwpv93juqd4cvdj58cxyh2wex4nykp4qqrxz5fmm8n2tn062335aj3qlkxv8ch956has4gqq927gqw7kgvgla0rk9ssknj2zgwsw3jzc9xp9pesrnll3fgzqqw0cv2v08kzdadu29qxxt2cas4p6gk4qt7t2jcm99z4cdxntx2j09zzvseya5rzzq8tpeh2uq8hcvcuw7qc3dhgt55ucvnkhzup3zkt68pruzv7yzt3srcm5tpluvypppkndydcjuqex4qya4fz3cypt8jnqspfk0j0qnayp2wp86avzjwqae3zyvjmsp5c5dn0chdtkkggpluq4cehvwcasy937sk5xtq9ukuttqt5ne3xytyg3hjjq43pq9wdkhvd8clyfkmqhp9z4dxkqf9gypttfth0r9gv6nxgztjcwy8250uk5e0hvndqcew4j46wpp238p2a8ewwee0rjpx6mn5rgjf2hzr58vkt7qtuaw3t398xx2hn58wvnj646q9dwpjrwu7s2j226dtehveymzdwwtylfhz3v9urksl2kpt9dq766uqg0da57rkegljnjq37k93pp6wdr6yu9lc4pmus2ydz5p269lqk8kzp5z3ax9mshy03unzfuwpdgpcmaap2ezxvsd3r82vwelvskl3arn06tc2aj2lk3vp0k0wld6pvs7225c57699kej3c99yamy3vd5a4glv0zqdm2fy94qjapej25r8umpku6hrl3xnm65d4qr5ky4rgzu9wzp4nyx7cux892ccga6sz3h0kzcq0wcust7pq25fcfgwz3h679dyflz8q2eq4dcqdd08f6lz2hctp0y86659l8fj3mcz3agc5crzc4rcfxf6dlrdpfhjx72xl62cscq8rp8k9fwg32tc8t3j3ek9r4z3nkqz53su03nqjkx4q8qz29jfmcyfpa34yudu5xzt7c
   hosts:
-    - &nocturne age1tag1qwuv5tda85lm9u2spjczdvhgaew9jpjsn9tmkwxwk3rldj8lm082v2xzmaw
     - &terra age1tag1q2vtzjms70mlc6xwxh8rj5c5hkj5qpel0sv6gn4l42nn9d3fpsxvu3p8t6f
+    - &nocturne age1tag1qwuv5tda85lm9u2spjczdvhgaew9jpjsn9tmkwxwk3rldj8lm082v2xzmaw
+  users:
+    - &cain-terra age1q5jytp4rr4k5v4csxna3a6487gcsj8w9gtw4s7xsdndq7c7ld95qxk73qg
+    - &cain-nocturne age1cu5na9yefpukzq98vmcjat9v6jfud25nw0lstamjwpuzmpm73dksvjpqex
 
 creation_rules:
   - path_regex: secrets/base.yaml
@@ -12,15 +15,19 @@ creation_rules:
           - *admin
           - *terra
           - *nocturne
+          - *cain-terra
+          - *cain-nocturne
 
   - path_regex: secrets/nocturne.yaml
     key_groups:
       - age:
           - *admin
           - *nocturne
+          - *cain-nocturne
 
   - path_regex: secrets/terra.yaml
     key_groups:
       - age:
           - *admin
           - *terra
+          - *cain-terra
