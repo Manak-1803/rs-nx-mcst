@@ -2,6 +2,7 @@
   flake.modules.generic.nocturne = {
     rsnxmcst = {
       attic-server.enable = true;
+      dbgate.enable = true;
       peanut.enable = true;
       postgresql.enable = true;
 
