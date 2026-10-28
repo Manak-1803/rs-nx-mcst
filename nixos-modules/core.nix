@@ -35,6 +35,7 @@
           qwerty.enable = true;
           secrets.enable = true;
           sudo.enable = true;
+          surge.enable = true;
           tpm.enable = true;
 
           nix.substituters = {
