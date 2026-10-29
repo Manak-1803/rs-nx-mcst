@@ -1,6 +1,11 @@
 { inputs, ... }: {
   flake.modules.nixos.cosmic =
-    { lib, config, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     let
       cfg = config.rsnxmcst.cosmic;
     in
@@ -16,9 +21,16 @@
           gnome.gnome-keyring.enable = false;
         };
 
-        environment.sessionVariables = {
-          NIXOS_OZONE_WL = "1";
-          COSMIC_DISABLE_DIRECT_SCANOUT = "true";
+        environment = {
+          sessionVariables = {
+            NIXOS_OZONE_WL = "1";
+            COSMIC_DATA_CONTROL_ENABLED = "1";
+            COSMIC_DISABLE_DIRECT_SCANOUT = "true";
+          };
+
+          systemPackages = with pkgs; [
+            wl-clipboard
+          ];
         };
 
         home-manager.sharedModules = [
