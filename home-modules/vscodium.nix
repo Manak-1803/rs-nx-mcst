@@ -57,9 +57,17 @@
           package = pkgs.vscode-with-extensions.override {
             vscode = pkgs.vscodium;
             vscodeExtensions = with pkgs.vscode-extensions; [
-              pkief.material-icon-theme
+              ms-azuretools.vscode-containers
               pkief.material-product-icons
+              pkief.material-icon-theme
+              tamasfe.even-better-toml
+              rust-lang.rust-analyzer
+              usernamehw.errorlens
+              ms-vscode.hexeditor
+              vadimcn.vscode-lldb
               jnoortheen.nix-ide
+              redhat.vscode-yaml
+              redhat.vscode-xml
               mkhl.direnv
             ];
           };
@@ -89,6 +97,10 @@
             "workbench.iconTheme" = "material-icon-theme";
             "workbench.productIconTheme" = "material-product-icons";
 
+            "git.confirmSync" = false;
+            "git.enableSmartCommit" = true;
+            "workbench.startupEditor" = "none";
+
             "nix.enableLanguageServer" = true;
             "nix.serverPath" = "nixd";
             "nix.serverSettings" = {
@@ -111,6 +123,15 @@
                 };
               };
             };
+
+            "containers.containerClient" = "com.microsoft.visualstudio.containers.podman";
+            "containers.orchestratorClient" = "com.microsoft.visualstudio.orchestrators.podmancompose";
+
+            "rust-analyzer.testExplorer" = true;
+            "rust-analyzer.server.path" = "rust-analyzer";
+            "rust-analyzer.imports.prefix" = "self";
+            "rust-analyzer.imports.granularity.enforce" = true;
+
           };
         };
 
