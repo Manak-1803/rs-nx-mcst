@@ -13,13 +13,17 @@
         programs.git = {
           enable = true;
           settings = {
-            init = {
-              defaultBranch = "main";
-            };
+            pull.rebase = true;
+            init.defaultBranch = "main";
+            branch.autosetuprebase = "always";
 
             user = {
               email = "arindamshrivastava@proton.me";
               name = "Manak1803";
+            };
+
+            alias = {
+              push-rebase = "!git pull --rebase && git push";
             };
           };
 
